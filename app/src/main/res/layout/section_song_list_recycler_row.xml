@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="16dp"
+    android:layout_marginEnd="16dp"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:id="@+id/song_cover_image_view" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text ="Song name"
+        android:textSize="11sp"
+        android:fontFamily="@font/circular_black_medium"
+        app:fontFamily='@font/circular_black_medium'
+        android:textColor="@color/white"
+        android:id="@+id/song_title_text_view"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/circular_book"
+        app:fontFamily='@font/circular_book'
+        tools:text ="Song subtitle"
+        android:textSize="11sp"
+        android:textColor="@color/subTitle"
+        android:id="@+id/song_subtitle_text_view"/>
+
+</LinearLayout>

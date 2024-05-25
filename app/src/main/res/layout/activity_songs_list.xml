@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:padding="8dp"
+    android:layout_gravity="center_horizontal"
+    tools:context =".SongsListActivity"
+    >
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:id="@id/cover_image_view"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Hindi"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_below="@id/cover_image_view"
+        android:fontFamily="@font/circular_bold"
+        app:fontFamily="@font/circular_bold"
+        android:id="@+id/name_text_view"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/divider"
+        app:dividerColor="@color/textWhite"
+        android:layout_below="@id/name_text_view"
+        android:layout_marginVertical="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/player_view"
+        android:layout_below="@+id/divider"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/songs_list_recycler_view"/>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/player_view"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_background"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/song_cover_image_view"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/song_title_text_view"
+            android:text="Now playing: "
+            android:paddingLeft="16dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/circular_black"
+            app:fontFamily='@font/circular_black'
+            android:layout_toEndOf="@id/song_cover_image_view"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/song_subtitle_text_view"
+            android:paddingLeft="16dp"
+            android:text="Now playing: "
+            android:fontFamily="@font/circular_bold"
+            app:fontFamily='@font/circular_bold'
+            android:textColor="@color/subTitle"
+            android:layout_below="@id/song_title_text_view"
+            android:layout_toRightOf="@id/song_cover_image_view"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

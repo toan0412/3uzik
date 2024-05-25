@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400943520306",
+    "project_id": "uzik-77a06",
+    "storage_bucket": "uzik-77a06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400943520306:android:5eaf5b39a3642a6fca3a2b",
+        "android_client_info": {
+          "package_name": "com.example.a3uzik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2zqKtUIQ8atzyNittf4zRjQiKpSuMBGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

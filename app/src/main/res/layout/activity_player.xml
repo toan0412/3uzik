@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayerActivity"
+    android:orientation="vertical"
+    android:background="@color/lightBlack"
+    android:padding="16dp"
+    android:layout_gravity="center_horizontal"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Now Playing"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/circular_black"
+        app:fontFamily='@font/circular_black'
+        />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:id="@+id/song_cover_image_view"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:visibility="invisible"
+            android:id="@+id/song_gif_image_view"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        tools:text="Song name"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/song_title_text_view"
+        android:layout_gravity="center"
+        android:fontFamily="@font/circular_black"
+        app:fontFamily='@font/circular_black'
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="Album"
+        android:textColor="@color/subTitle"
+        android:layout_marginTop="4dp"
+        android:id="@+id/song_subtitle_text_view"
+        android:layout_gravity="center"
+        android:fontFamily="@font/circular_book"
+        app:fontFamily='@font/circular_book'
+        />
+
+    <androidx.media3.ui.PlayerView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        app:hide_on_touch="false"
+        app:show_timeout="0"
+        android:id="@+id/player_view"
+        />
+
+
+
+</LinearLayout>
