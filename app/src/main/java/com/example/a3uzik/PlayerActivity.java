@@ -4,24 +4,44 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.common.MediaItem;
 import androidx.media3.common.Player;
+import androidx.media3.common.util.Log;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
 import com.bumptech.glide.Glide;
 import com.example.a3uzik.databinding.ActivityPlayerBinding;
+import com.example.a3uzik.models.CategoryModel;
 import com.example.a3uzik.models.SongModel;
 
 public class PlayerActivity extends AppCompatActivity {
 
     private ActivityPlayerBinding binding;
+    public static CategoryModel category;
+
     private ExoPlayer exoPlayer;
+    private int currentSongIndex = 0;
 
     private final Player.Listener playerListener = new Player.Listener() {
         @Override
         public void onIsPlayingChanged(boolean isPlaying) {
             PlayerActivity.this.showGif(isPlaying);
         }
+
+        @Override
+        public void onPlaybackStateChanged(int state) {
+            if (state == Player.STATE_ENDED) {
+                playNextSong();
+            }
+        }
+
     };
+
+    @OptIn(markerClass = UnstableApi.class)
+    private void playNextSong() {
+            //Chuyeenr bai hat
+    }
+
 
     @OptIn(markerClass = UnstableApi.class)
     @Override
@@ -41,12 +61,13 @@ public class PlayerActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(binding.songGifImageView);
 
-            exoPlayer = MyExoplayer.getInstance();
+            exoPlayer = MyExoplayer.getInstance(this);
             binding.playerView.setPlayer(exoPlayer);
             binding.playerView.showController();
             exoPlayer.addListener(playerListener);
         }
     }
+
 
     @Override
     protected void onDestroy() {

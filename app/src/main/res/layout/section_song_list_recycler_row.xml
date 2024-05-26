@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="16dp"
+    android:layout_marginVertical="8dp"
     android:layout_marginEnd="16dp"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="fitXY"
-        android:id="@+id/song_cover_image_view" />
+        android:id="@+id/song_cover_image_view"
+        />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:text ="Song name"
-        android:textSize="11sp"
-        android:fontFamily="@font/circular_black_medium"
-        app:fontFamily='@font/circular_black_medium'
-        android:textColor="@color/white"
-        android:id="@+id/song_title_text_view"/>
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text ="Song name"
+            android:textSize="11sp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/circular_bold"
+            app:fontFamily='@font/circular_bold'
+            android:textColor="@color/white"
+            android:id="@+id/song_title_text_view"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/circular_book"
-        app:fontFamily='@font/circular_book'
-        tools:text ="Song subtitle"
-        android:textSize="11sp"
-        android:textColor="@color/subTitle"
-        android:id="@+id/song_subtitle_text_view"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/circular_book"
+            app:fontFamily='@font/circular_book'
+            android:layout_marginStart="8dp"
+            tools:text ="Song subtitle"
+            android:textSize="11sp"
+            android:textColor="@color/subTitle"
+            android:id="@+id/song_subtitle_text_view"/>
+    </LinearLayout>
 
 </LinearLayout>

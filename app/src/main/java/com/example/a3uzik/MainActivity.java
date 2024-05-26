@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -14,7 +15,6 @@ import com.example.a3uzik.adapter.SectionSongListAdapter;
 import com.example.a3uzik.databinding.ActivityMainBinding;
 import com.example.a3uzik.models.CategoryModel;
 import com.example.a3uzik.models.SongModel;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     CategoryModel section = documentSnapshot.toObject(CategoryModel.class);
                     if (section != null) {
                         binding.trendingSectionTitle.setText(section.getName());
-                        binding.trendingSectionRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2, LinearLayoutManager.VERTICAL, false);
+                        binding.trendingSectionRecyclerView.setLayoutManager(layoutManager);
                         binding.trendingSectionRecyclerView.setAdapter(new SectionSongListAdapter(section.getSongs()));
                         binding.trendingSectionMainLayout.setOnClickListener(v -> {
                             SongsListActivity.category = section;
@@ -104,4 +105,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

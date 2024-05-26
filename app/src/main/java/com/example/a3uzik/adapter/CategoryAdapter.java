@@ -30,7 +30,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
 
         public void bindData(CategoryModel category) {
-            binding.nameTextView.setText(category.getName());
             Glide.with(binding.coverImageView.getContext()).load(category.getCoverUrl())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.coverImageView);

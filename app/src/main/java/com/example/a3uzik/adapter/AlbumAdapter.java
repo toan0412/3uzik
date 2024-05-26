@@ -30,7 +30,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
         }
 
         public void bindData(CategoryModel album) {
-            binding.nameTextView.setText(album.getName());
             Glide.with(binding.coverImageView.getContext()).load(album.getCoverUrl())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.coverImageView);

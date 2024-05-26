@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
     
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,9 +55,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="Chill"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/circular_bold"
                 app:fontFamily='@font/circular_bold'
                 />
@@ -81,9 +82,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/trending_section_title"
-                    android:text="Trending"
+                    android:text="Đáng chú ý"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:fontFamily="@font/circular_bold"
                     app:fontFamily='@font/circular_bold'/>
 
@@ -101,9 +102,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Albums"
+                android:text="Album mới phát hành"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/circular_bold"
                 app:fontFamily='@font/circular_bold'
                 />
@@ -159,11 +160,5 @@
             android:layout_toRightOf="@id/song_cover_image_view"
             android:textSize="12sp" />
     </RelativeLayout>
-
-
-
-
-
-
 
 </RelativeLayout>

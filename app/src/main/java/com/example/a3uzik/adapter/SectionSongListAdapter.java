@@ -37,10 +37,10 @@ public class SectionSongListAdapter extends RecyclerView.Adapter<SectionSongList
                     .addOnSuccessListener(documentSnapshot -> {
                         SongModel song = documentSnapshot.toObject(SongModel.class);
                         if (song != null) {
-                            binding.songTitleTextView.setText(song.getTitle());
+                            binding.songTitleTextView.setText(song.getTitle().toUpperCase());
                             binding.songSubtitleTextView.setText(song.getSubtitle());
                             Glide.with(binding.songCoverImageView.getContext()).load(song.getCoverUrl())
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(4)))
                                     .into(binding.songCoverImageView);
                             binding.getRoot().setOnClickListener(v -> {
                                 MyExoplayer.startPlaying(v.getContext(), song);

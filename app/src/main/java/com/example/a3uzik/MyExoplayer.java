@@ -13,7 +13,7 @@ public class MyExoplayer {
         return currentSong;
     }
 
-    public static ExoPlayer getInstance() {
+    public static ExoPlayer getInstance(PlayerActivity playerActivity) {
         return exoPlayer;
     }
 
