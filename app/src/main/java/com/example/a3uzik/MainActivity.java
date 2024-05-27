@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private CategoryAdapter categoryAdapter;
     private AlbumAdapter albumAdapter;
+    private ExoPlayer exoPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initializePlayer();
         getCategories();
         setupSection();
         getAlbums();
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         showPlayerView();
+    }
+
+    private void initializePlayer() {
+        exoPlayer = new ExoPlayer.Builder(this).build();
     }
 
     private void showPlayerView() {
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(binding.songCoverImageView).load(currentSong.getCoverUrl())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.songCoverImageView);
+            binding.playBtn.setOnClickListener(v -> togglePlayPause());
         } else {
             binding.playerView.setVisibility(View.GONE);
         }
@@ -104,6 +112,19 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 });
+    }
+
+    private void togglePlayPause() {
+        exoPlayer = MyExoplayer.getInstance(this);
+        if (exoPlayer != null) {
+            if (exoPlayer.isPlaying()) {
+                binding.playBtn.setImageResource(R.drawable.ic_play_white);
+                exoPlayer.pause();
+            } else {
+                binding.playBtn.setImageResource(R.drawable.ic_pause_white);
+                exoPlayer.play();
+            }
+        }
     }
 
 }

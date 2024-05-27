@@ -34,7 +34,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.coverImageView);
 
-            // Start SongsList Activity
             Context context = binding.getRoot().getContext();
             binding.getRoot().setOnClickListener(v -> {
                 SongsListActivity.category = category;

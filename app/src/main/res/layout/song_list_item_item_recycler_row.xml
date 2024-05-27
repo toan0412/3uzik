@@ -39,6 +39,7 @@
             app:fontFamily="@font/circular_bold"
             android:textColor="@color/subTitle"
             android:id="@+id/song_subtitle_text_view"/>
+
     </LinearLayout>
 
 

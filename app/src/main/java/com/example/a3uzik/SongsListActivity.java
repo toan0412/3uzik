@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -19,6 +20,7 @@ public class SongsListActivity extends AppCompatActivity {
 
     private ActivitySongsListBinding binding;
     private SongsListAdapter songsListAdapter;
+    private ExoPlayer exoPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,22 @@ public class SongsListActivity extends AppCompatActivity {
             Glide.with(binding.songCoverImageView.getContext()).load(currentSong.getCoverUrl())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.songCoverImageView);
+            binding.playBtn.setOnClickListener(v -> togglePlayPause());
         } else {
             binding.playerView.setVisibility(View.GONE);
+        }
+    }
+
+    private void togglePlayPause() {
+        exoPlayer = MyExoplayer.getInstance(this);
+        if (exoPlayer != null) {
+            if (exoPlayer.isPlaying()) {
+                binding.playBtn.setImageResource(R.drawable.ic_play_white);
+                exoPlayer.pause();
+            } else {
+                binding.playBtn.setImageResource(R.drawable.ic_pause_white);
+                exoPlayer.play();
+            }
         }
     }
 
