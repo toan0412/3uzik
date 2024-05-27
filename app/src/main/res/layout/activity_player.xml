@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity"
     android:orientation="vertical"
-    android:background="@color/lightBlack"
+    android:background="@color/black"
     android:padding="16dp"
     android:layout_gravity="center_horizontal"
     >
@@ -70,15 +70,96 @@
         app:fontFamily='@font/circular_book'
         />
 
-    <androidx.media3.ui.PlayerView
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        app:hide_on_touch="false"
-        app:show_timeout="0"
-        android:id="@+id/player_view"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="70dp"
+        >
+
+        <TextView
+            android:id="@+id/progressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            tools:text="0:00"
+            />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/white"
+            android:thumbTint="@color/white" />
+
+        <TextView
+            android:id="@+id/durationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            tools:text="0:00"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        >
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_loop"
+            android:layout_marginRight="30dp"
+            android:id="@+id/loopBtn"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_previous"
+            android:id="@+id/previousBtn"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_pause"
+            android:id="@+id/pauseBtn"/>
 
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_next"
+            android:id="@+id/nextBtn"
+            />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:backgroundTint="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_shuffle"
+            android:id="@+id/shuffleBtn"
+            android:layout_marginLeft="30dp"
+            />
+    </LinearLayout>
 
 </LinearLayout>
