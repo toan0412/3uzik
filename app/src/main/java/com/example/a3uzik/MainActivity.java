@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,13 +27,24 @@ public class MainActivity extends AppCompatActivity {
     private AlbumAdapter albumAdapter;
     private ExoPlayer exoPlayer;
 
+    private final Player.Listener playerListener = new Player.Listener() {
+        @Override
+        public void onPlaybackStateChanged(int state) {
+            if (state == Player.STATE_ENDED) {
+                playNextSong();
+                showPlayerView();
+            }
+            }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        initializePlayer();
+        exoPlayer = MyExoplayer.getInstance(this);
+        exoPlayer.addListener(playerListener);
         getCategories();
         setupSection();
         getAlbums();
@@ -44,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         showPlayerView();
     }
 
-    private void initializePlayer() {
-        exoPlayer = new ExoPlayer.Builder(this).build();
-    }
 
     private void showPlayerView() {
         binding.playerView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlayerActivity.class)));
@@ -115,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void togglePlayPause() {
-        exoPlayer = MyExoplayer.getInstance(this);
         if (exoPlayer != null) {
             if (exoPlayer.isPlaying()) {
                 binding.playBtn.setImageResource(R.drawable.ic_play_white);
@@ -127,4 +135,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void playNextSong() {
+        SongModel nextSong = MyExoplayer.getNextSong();
+        MyExoplayer.startPlaying(this, nextSong);
+    }
 }

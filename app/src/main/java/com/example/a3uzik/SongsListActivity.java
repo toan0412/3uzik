@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
@@ -22,11 +23,23 @@ public class SongsListActivity extends AppCompatActivity {
     private SongsListAdapter songsListAdapter;
     private ExoPlayer exoPlayer;
 
+    private final Player.Listener playerListener = new Player.Listener() {
+        @Override
+        public void onPlaybackStateChanged(int state) {
+            if (state == Player.STATE_ENDED) {
+                playNextSong();
+                showPlayerView();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySongsListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        exoPlayer = MyExoplayer.getInstance(this);
+        exoPlayer.addListener(playerListener);
 
         binding.nameTextView.setText(category.getName());
         Glide.with(binding.coverImageView.getContext()).load(category.getCoverUrl())
@@ -75,6 +88,11 @@ public class SongsListActivity extends AppCompatActivity {
                 exoPlayer.play();
             }
         }
+    }
+
+    private void playNextSong() {
+        SongModel nextSong = MyExoplayer.getNextSong();
+        MyExoplayer.startPlaying(this, nextSong);
     }
 
 }
