@@ -2,7 +2,10 @@ package com.example.a3uzik;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
@@ -17,6 +20,7 @@ import com.example.a3uzik.adapter.SectionSongListAdapter;
 import com.example.a3uzik.databinding.ActivityMainBinding;
 import com.example.a3uzik.models.CategoryModel;
 import com.example.a3uzik.models.SongModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
@@ -48,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
         getCategories();
         setupSection();
         getAlbums();
+        binding.optionBtn.setOnClickListener(v -> showPopupMenu());
+    }
+
+    private void showPopupMenu() {
+        PopupMenu popupMenu = new PopupMenu(this, binding.optionBtn);
+        popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.logout) {
+                    logout();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

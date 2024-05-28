@@ -35,6 +35,7 @@
             android:src="@drawable/icon_menu"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:id="@+id/optionBtn"
             />
 
     </RelativeLayout>

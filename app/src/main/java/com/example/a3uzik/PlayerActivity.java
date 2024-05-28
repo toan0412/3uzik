@@ -19,6 +19,7 @@ import com.example.a3uzik.models.SongModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ public class PlayerActivity extends AppCompatActivity {
     private ActivityPlayerBinding binding;
     private ExoPlayer exoPlayer;
     private FirebaseFirestore db;
-    private boolean isShuffle = false;
+    private boolean isShuffle;
     private Handler handler;
     private Runnable runnable;
 
@@ -83,6 +84,30 @@ public class PlayerActivity extends AppCompatActivity {
                 });
     }
 
+    @OptIn(markerClass = UnstableApi.class)
+    private void getRandomSongs() {
+        db.collection("songs").get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<SongModel> allSongs = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            SongModel song = document.toObject(SongModel.class);
+                            allSongs.add(song);
+                        }
+
+                        int numberOfSongs = 20;
+                        List<SongModel> randomSongs = getRandomSubset(allSongs, numberOfSongs);
+                        MyExoplayer.setPlaylist(randomSongs);
+                    }
+                });
+    }
+    private List<SongModel> getRandomSubset(List<SongModel> allSongs, int numberOfSongs) {
+        Collections.shuffle(allSongs);
+        if (numberOfSongs > allSongs.size()) {
+            numberOfSongs = allSongs.size();
+        }
+        return new ArrayList<>(allSongs.subList(0, numberOfSongs));
+    }
 
 
     private void setupButtonListeners() {
@@ -131,8 +156,10 @@ public class PlayerActivity extends AppCompatActivity {
         if (exoPlayer != null) {
             isShuffle = !isShuffle;
             if (isShuffle) {
+                getRandomSongs();
                 binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle_on);
             } else {
+                getAllSongs();
                 binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle);
             }
         }

@@ -4,6 +4,11 @@ import android.content.Context;
 import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
 import com.example.a3uzik.models.SongModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Firebase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 public class MyExoplayer {
@@ -48,6 +53,7 @@ public class MyExoplayer {
         if (currentSong != song) {
             // New song
             currentSong = song;
+            updateCount();
             if (currentSong.getUrl() != null) {
                 MediaItem mediaItem = MediaItem.fromUri(currentSong.getUrl());
                 exoPlayer.setMediaItem(mediaItem);
@@ -56,4 +62,30 @@ public class MyExoplayer {
             }
         }
     }
+
+    public static void updateCount() {
+        if (currentSong != null && currentSong.getId() != null) {
+            String id = currentSong.getId();
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            firestore.collection("songs")
+                    .document(id)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot document) {
+                            Long latestCount = document.getLong("count");
+                            if (latestCount == null) {
+                                latestCount = 1L;
+                            } else {
+                                latestCount += 1;
+                            }
+                            firestore.collection("songs")
+                                    .document(id)
+                                    .update("count", latestCount);
+                        }
+                    });
+        }
+    }
+
 }
