@@ -1,5 +1,6 @@
 package com.example.a3uzik;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.media3.common.Player;
@@ -28,7 +30,8 @@ public class PlayerActivity extends AppCompatActivity {
     private ActivityPlayerBinding binding;
     private ExoPlayer exoPlayer;
     private FirebaseFirestore db;
-    private boolean isShuffle;
+    private boolean isLooping;
+    private boolean isShuffling;
     private Handler handler;
     private Runnable runnable;
 
@@ -61,12 +64,31 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPlayerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         db = FirebaseFirestore.getInstance();
+
+        exoPlayer = MyExoplayer.getInstance(this);
+        SharedPreferences prefs = getSharedPreferences("PlayerPrefs", MODE_PRIVATE);
+        isShuffling = prefs.getBoolean("isShuffling", false);
+        isLooping = exoPlayer.getRepeatMode() == Player.REPEAT_MODE_ONE;
+
+        checkStateShuffleAndLoop();
         getAllSongs();
         playCurrentSong();
         setupButtonListeners();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkStateShuffleAndLoop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        savePreferences();
+    }
+
 
     @OptIn(markerClass = UnstableApi.class)
     private void getAllSongs() {
@@ -116,6 +138,7 @@ public class PlayerActivity extends AppCompatActivity {
         binding.pauseBtn.setOnClickListener(v -> togglePlayPause());
         binding.nextBtn.setOnClickListener(v -> playNextSong());
         binding.shuffleBtn.setOnClickListener(v -> toggleShuffle());
+        binding.backBtn.setOnClickListener(v -> finish());
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -124,44 +147,40 @@ public class PlayerActivity extends AppCompatActivity {
                     exoPlayer.seekTo(newPosition);
                 }
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
     }
 
 
-    private void toggleLoop() {
+    private void toggleShuffle() {
         if (exoPlayer != null) {
-            boolean isLooping = exoPlayer.getRepeatMode() == Player.REPEAT_MODE_ONE;
-            if (isLooping) {
-                exoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
-                binding.loopBtn.setImageResource(R.drawable.ic_loop);
+            isShuffling = !isShuffling;
+            if (isShuffling) {
+                isLooping = false;
+                getRandomSongs();
             } else {
-                exoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
-                binding.loopBtn.setImageResource(R.drawable.ic_loop_on);
+                getAllSongs();
             }
+            checkStateShuffleAndLoop();
+            savePreferences();
         }
     }
 
-    private void toggleShuffle() {
+    private void toggleLoop() {
         if (exoPlayer != null) {
-            isShuffle = !isShuffle;
-            if (isShuffle) {
-                getRandomSongs();
-                binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle_on);
+            isLooping = !isLooping;
+            if (isLooping) {
+                isShuffling = false;
+                exoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
             } else {
-                getAllSongs();
-                binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle);
+                exoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
             }
+            checkStateShuffleAndLoop();
+            savePreferences();
         }
     }
 
@@ -174,6 +193,8 @@ public class PlayerActivity extends AppCompatActivity {
                 binding.pauseBtn.setImageResource(R.drawable.ic_pause);
                 exoPlayer.play();
             }
+            checkStateShuffleAndLoop();
+            savePreferences();
         }
     }
 
@@ -224,12 +245,22 @@ public class PlayerActivity extends AppCompatActivity {
 
 
     private void playNextSong() {
-        SongModel nextSong = MyExoplayer.getNextSong();
+        SongModel nextSong;
+        if(isLooping){
+            nextSong = MyExoplayer.getCurrentSong();
+        }else {
+            nextSong = MyExoplayer.getNextSong();
+        }
         playSong(nextSong);
     }
 
     private void playPreviousSong() {
-        SongModel previousSong = MyExoplayer.getPreviousSong();
+        SongModel previousSong;
+        if(isLooping){
+            previousSong = MyExoplayer.getCurrentSong();
+        }else {
+            previousSong = MyExoplayer.getPreviousSong();
+        }
         playSong(previousSong);
     }
 
@@ -258,5 +289,27 @@ public class PlayerActivity extends AppCompatActivity {
         long seconds = (milliseconds / 1000) % 60;
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
+
+    private void checkStateShuffleAndLoop() {
+        if (isShuffling) {
+            binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle_on);
+        } else {
+            binding.shuffleBtn.setImageResource(R.drawable.ic_shuffle);
+        }
+        if (isLooping) {
+            binding.loopBtn.setImageResource(R.drawable.ic_loop_on);
+        } else {
+            binding.loopBtn.setImageResource(R.drawable.ic_loop);
+        }
+    }
+
+    private void savePreferences() {
+        SharedPreferences prefs = getSharedPreferences("PlayerPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("isShuffling", isShuffling);
+        editor.putBoolean("isLooping", isLooping);
+        editor.apply();
+    }
+
 
 }

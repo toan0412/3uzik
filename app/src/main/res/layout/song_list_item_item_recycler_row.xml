@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    tools:background="@color/lightBlack">
+    android:background="@color/black"
+    android:paddingVertical="50dp"
+    >
 
     <ImageView
         android:layout_width="40dp"
@@ -41,8 +43,4 @@
             android:id="@+id/song_subtitle_text_view"/>
 
     </LinearLayout>
-
-
-
-
 </RelativeLayout>

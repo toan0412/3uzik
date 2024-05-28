@@ -24,6 +24,9 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.passwordEditText.getText().toString();
             logIn(email, password);
         });
+        binding.signUpTextView.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        });
     }
 
     @Override

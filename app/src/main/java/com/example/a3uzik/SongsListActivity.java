@@ -47,6 +47,12 @@ public class SongsListActivity extends AppCompatActivity {
                 .into(binding.coverImageView);
 
         setupSongsListRecyclerView();
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
