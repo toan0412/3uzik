@@ -17,6 +17,17 @@
         android:src="@drawable/logo"
         android:layout_gravity="center"
         android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hàng triệu bài hát miễn phí trên 3uzik"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/circular_bold"
+        />
+
     
     <Button
         android:layout_marginTop="30dp"
