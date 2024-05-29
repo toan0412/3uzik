@@ -6,22 +6,20 @@ public class SongModel {
     private String subtitle;
     private String url;
     private String coverUrl;
+    private boolean isHeart;
 
     public SongModel() {
-        this.id = "";
-        this.title = "";
-        this.subtitle = "";
-        this.url = "";
-        this.coverUrl = "";
     }
 
-    public SongModel(String id, String title, String subtitle, String url, String coverUrl) {
+    public SongModel(String id, String title, String subtitle, String url, String coverUrl, boolean isHeart) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
         this.url = url;
         this.coverUrl = coverUrl;
+        this.isHeart = isHeart;
     }
+
 
     public String getId() {
         return id;
@@ -61,5 +59,13 @@ public class SongModel {
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public boolean isHeart() {
+        return isHeart;
+    }
+
+    public void setHeart(boolean heart) {
+        isHeart = heart;
     }
 }

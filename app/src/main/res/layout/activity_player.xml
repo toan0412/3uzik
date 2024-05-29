@@ -76,6 +76,16 @@
         app:fontFamily='@font/circular_book'
         />
 
+    <ImageButton
+        android:id="@+id/heartBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/ic_heart"
+        android:layout_gravity="right"
+        android:backgroundTint="@color/black"
+        />
+
 
 
     <LinearLayout
@@ -84,7 +94,7 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:paddingHorizontal="10dp"
-        android:layout_marginTop="70dp"
+
         >
 
         <TextView

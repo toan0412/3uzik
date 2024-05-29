@@ -12,7 +12,20 @@
           "package_name": "com.example.a3uzik"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "400943520306-7kgg7porua0u02cl8fcq7n5oi78buv86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.a3uzik",
+            "certificate_hash": "8a0b1e28ad366a05c2d9ea714e75e66d5ea17375"
+          }
+        },
+        {
+          "client_id": "400943520306-t39tu6daoaaonosos6ip1t79a3lra5id.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA2zqKtUIQ8atzyNittf4zRjQiKpSuMBGw"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400943520306-t39tu6daoaaonosos6ip1t79a3lra5id.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

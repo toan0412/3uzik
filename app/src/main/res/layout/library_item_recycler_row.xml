@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        android:id="@+id/library_item_cover_image_view"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text ="Song name"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/circular_bold"
+            app:fontFamily='@font/circular_bold'
+            android:textColor="@color/white"
+            android:id="@+id/library_item_title_text_view"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/circular_book"
+            app:fontFamily='@font/circular_book'
+            android:layout_marginStart="8dp"
+            tools:text ="Song subtitle"
+            android:textSize="12sp"
+            android:textColor="@color/subTitle"
+            android:id="@+id/library_item_subtitle_text_view"/>
+    </LinearLayout>
+
+</LinearLayout>

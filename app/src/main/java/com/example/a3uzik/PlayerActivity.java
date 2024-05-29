@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
@@ -138,6 +139,7 @@ public class PlayerActivity extends AppCompatActivity {
         binding.pauseBtn.setOnClickListener(v -> togglePlayPause());
         binding.nextBtn.setOnClickListener(v -> playNextSong());
         binding.shuffleBtn.setOnClickListener(v -> toggleShuffle());
+        binding.heartBtn.setOnClickListener(v -> toggleHeart());
         binding.backBtn.setOnClickListener(v -> finish());
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -184,6 +186,20 @@ public class PlayerActivity extends AppCompatActivity {
         }
     }
 
+    private void toggleHeart(){
+        SongModel currentSong = MyExoplayer.getCurrentSong();
+        if(currentSong.isHeart()){
+            currentSong.setHeart(false);
+            binding.heartBtn.setImageResource(R.drawable.ic_heart);
+        }else {
+            currentSong.setHeart(true);
+            binding.heartBtn.setImageResource(R.drawable.ic_hearted);
+        }
+        MyExoplayer.updateLike();
+    }
+
+
+
     private void togglePlayPause() {
         if (exoPlayer != null) {
             if (exoPlayer.isPlaying()) {
@@ -204,6 +220,8 @@ public class PlayerActivity extends AppCompatActivity {
             MyExoplayer.startPlaying(this, song);
             binding.songTitleTextView.setText(song.getTitle());
             binding.songSubtitleTextView.setText(song.getSubtitle());
+            binding.heartBtn.setImageResource(song.isHeart() ? R.drawable.ic_hearted : R.drawable.ic_heart);
+            Toast.makeText(this,"check hearted" + song.isHeart(), Toast.LENGTH_SHORT).show();
             Glide.with(binding.songCoverImageView.getContext()).load(song.getCoverUrl())
                     .circleCrop()
                     .into(binding.songCoverImageView);

@@ -2,6 +2,7 @@ package com.example.a3uzik;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -12,10 +13,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.a3uzik.databinding.ActivityLoginBinding;
 import com.example.a3uzik.databinding.ActivitySignUpBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.signInBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
+        });
+        binding.signInWithGoogleBtn.setOnClickListener(v ->{
+            Toast.makeText(
+                    this,
+                    "This function will be available soon XD",
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
+        binding.signInWithFBBtn.setOnClickListener(v ->{
+            Toast.makeText(
+                    this,
+                    "This function will be available soon XD",
+                    Toast.LENGTH_SHORT
+            ).show();
         });
     }
 }

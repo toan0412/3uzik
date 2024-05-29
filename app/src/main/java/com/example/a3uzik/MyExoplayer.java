@@ -88,4 +88,28 @@ public class MyExoplayer {
         }
     }
 
+    public static void updateLike() {
+        if (currentSong != null && currentSong.getId() != null) {
+            String id = currentSong.getId();
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            firestore.collection("songs")
+                    .document(id)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot document) {
+                            Boolean isLiked = document.getBoolean("isHeart");
+                            if (isLiked == null) {
+                            }
+                            isLiked = !isLiked;
+                            firestore.collection("songs")
+                                    .document(id)
+                                    .update("isHeart", isLiked);
+                        }
+                    });
+        }
+    }
+
+
 }
