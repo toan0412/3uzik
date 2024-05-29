@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title="Trang chủ"
         android:icon="@drawable/ic_home"
         android:background="@drawable/bottom_nav_item_background"
         />
     <item
         android:id="@+id/personal"
-        android:title="Personal"
+        android:title="Cá nhân"
         android:icon="@drawable/ic_personal"
         android:background="@drawable/bottom_nav_item_background"
         />

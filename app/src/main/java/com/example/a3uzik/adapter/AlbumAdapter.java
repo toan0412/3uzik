@@ -33,7 +33,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
             Glide.with(binding.coverImageView.getContext()).load(album.getCoverUrl())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                     .into(binding.coverImageView);
-
+            binding.titleTextView.setText(album.getName());
             Context context = binding.getRoot().getContext();
             binding.getRoot().setOnClickListener(v -> {
                 SongsListActivity.category = album;

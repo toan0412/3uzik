@@ -2,7 +2,6 @@ package com.example.a3uzik;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.a3uzik.adapter.AlbumAdapter;
-import com.example.a3uzik.adapter.CategoryAdapter;
 import com.example.a3uzik.adapter.LibraryAdapter;
 import com.example.a3uzik.adapter.SectionSongListAdapter;
-import com.example.a3uzik.databinding.FragmentHomeBinding;
 import com.example.a3uzik.databinding.FragmentPersonalBinding;
 import com.example.a3uzik.models.CategoryModel;
 import com.example.a3uzik.models.SongModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -57,6 +53,8 @@ public class PersonalFragment extends Fragment {
         exoPlayer.addListener(playerListener);
 
         updateMostListenedSongsInLibrary();
+        updateLikedSong();
+        setupSection();
 
         binding.optionBtn.setOnClickListener(v -> showPopupMenu());
     }
@@ -130,7 +128,6 @@ public class PersonalFragment extends Fragment {
         binding.libraryRecyclerView.setAdapter(libraryAdapter);
     }
 
-    // Add most listened songs
 
     private void updateMostListenedSongsInLibrary() {
         FirebaseFirestore.getInstance().collection("songs")
@@ -152,20 +149,52 @@ public class PersonalFragment extends Fragment {
                             .update(data)
                             .addOnSuccessListener(aVoid -> {
                                 getLibrary();
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e("LibraryFragment", "Error updating most listened songs", e);
                             });
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("LibraryFragment", "Error getting most listened songs", e);
                 });
+
     }
 
+    private void updateLikedSong() {
+        FirebaseFirestore.getInstance().collection("songs")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<String> likedSongIds = new ArrayList<>();
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        String isHeartString = document.getString("isHeart");
+                        if (isHeartString != null && Boolean.parseBoolean(isHeartString)) {
+                            likedSongIds.add(document.getId());
+                        }
+                    }
 
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("songs", likedSongIds);
 
+                    FirebaseFirestore.getInstance().collection("library")
+                            .document("favorite_song")
+                            .update(data)
+                            .addOnSuccessListener(aVoid -> {
+                                getLibrary();
+                            });
 
+                });
 
+    }
+
+    private void setupSection() {
+        FirebaseFirestore.getInstance().collection("library")
+                .document("recently_played_song")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    CategoryModel section = documentSnapshot.toObject(CategoryModel.class);
+                    if (section != null) {
+                        binding.recentlyPlayedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                        binding.recentlyPlayedRecyclerView.setAdapter(new SectionSongListAdapter(section.getSongs()));
+                        binding.recentlyPlayedMainLayout.setOnClickListener(v -> {
+                            SongsListActivity.category = section;
+                            startActivity(new Intent(getContext(), SongsListActivity.class));
+                        });
+                    }
+                });
+    }
     private void togglePlayPause() {
         if (exoPlayer != null) {
             if (exoPlayer.isPlaying()) {

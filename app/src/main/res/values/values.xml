@@ -1,0 +1,6 @@
+<resources>
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">#ffffff</item>
+    </style>
+</resources>
+

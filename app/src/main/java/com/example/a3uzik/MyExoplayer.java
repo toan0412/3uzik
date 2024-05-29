@@ -9,6 +9,7 @@ import com.google.firebase.Firebase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyExoplayer {
@@ -59,6 +60,7 @@ public class MyExoplayer {
                 exoPlayer.setMediaItem(mediaItem);
                 exoPlayer.prepare();
                 exoPlayer.play();
+                addToRecentlyPlayed(currentSong);
             }
         }
     }
@@ -110,6 +112,27 @@ public class MyExoplayer {
         }
     }
 
+    public static void addToRecentlyPlayed(SongModel song) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        String songId = song.getId();
+
+        firestore.collection("library").document("recently_played_song").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                List<String> recentlyPlayed = (List<String>) documentSnapshot.get("songs");
+                if (recentlyPlayed == null) {
+                    recentlyPlayed = new ArrayList<>();
+                }
+                recentlyPlayed.remove(songId); // Remove the song if it already exists
+                recentlyPlayed.add(0, songId);
+
+                if (recentlyPlayed.size() > 10) {
+                    recentlyPlayed.remove(recentlyPlayed.size() - 1);
+                }
+                firestore.collection("library").document("recently_played_song").update("songs", recentlyPlayed);
+            }
+        });
+    }
 
 
 }
