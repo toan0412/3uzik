@@ -33,14 +33,14 @@ public class SignUpActivity extends AppCompatActivity {
         binding.signInWithGoogleBtn.setOnClickListener(v ->{
             Toast.makeText(
                     this,
-                    "This function will be available soon XD",
+                    "Chức năng này sẽ sớm xuất hiện XD",
                     Toast.LENGTH_SHORT
             ).show();
         });
         binding.signInWithFBBtn.setOnClickListener(v ->{
             Toast.makeText(
                     this,
-                    "This function will be available soon XD",
+                    "Chức năng này sẽ sớm xuất hiện XD",
                     Toast.LENGTH_SHORT
             ).show();
         });

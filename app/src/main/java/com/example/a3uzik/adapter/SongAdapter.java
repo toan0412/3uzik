@@ -1,6 +1,7 @@
 package com.example.a3uzik.adapter;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -17,15 +18,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.MyViewHolder> {
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> {
 
-    private List<String> songIdList;
+    private List<SongModel> mSongList;
 
-    public SongsListAdapter(List<String> songIdList) {
-        this.songIdList = songIdList;
+    public SongAdapter(List<SongModel> mSongList) {
+        this.mSongList = mSongList;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        //Su dung lai song_list_item_recycler_row.xml de bind du lieu
         private final SongListItemItemRecyclerRowBinding binding;
 
         public MyViewHolder(SongListItemItemRecyclerRowBinding binding) {
@@ -33,23 +36,16 @@ public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.MyVi
             this.binding = binding;
         }
 
-        public void bindData(String songId) {
-            FirebaseFirestore.getInstance().collection("songs")
-                    .document(songId).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        SongModel song = documentSnapshot.toObject(SongModel.class);
-                        if (song != null) {
+        public void bindData(SongModel song) {
                             binding.songTitleTextView.setText(song.getTitle());
                             binding.songSubtitleTextView.setText(song.getSubtitle());
                             Glide.with(binding.songCoverImageView.getContext()).load(song.getCoverUrl())
                                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(32)))
                                     .into(binding.songCoverImageView);
-                            binding.getRoot().setOnClickListener(v -> {
-                                MyExoplayer.startPlaying(binding.getRoot().getContext(), song);
-                                v.getContext().startActivity(new Intent(v.getContext(), PlayerActivity.class));
-                            });
-                        }
-                    });
+            binding.getRoot().setOnClickListener(v -> {
+                MyExoplayer.startPlaying(binding.getRoot().getContext(), song);
+                v.getContext().startActivity(new Intent(v.getContext(), PlayerActivity.class));
+            });
         }
     }
 
@@ -63,16 +59,16 @@ public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bindData(songIdList.get(position));
+        holder.bindData(mSongList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return songIdList.size();
+        return mSongList.size();
     }
 
-    public void updateList(List<String> newSongIdList) {
-        this.songIdList = newSongIdList;
+    public void updateList(List<SongModel> filteredList) {
+        mSongList = filteredList;
         notifyDataSetChanged();
     }
 }

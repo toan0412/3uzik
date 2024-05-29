@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.home){
                 replaceFragment(new HomeFragment());
             }
+            else if (item.getItemId() == R.id.search){
+                replaceFragment(new SearchFragment());
+            }
             else {
                 item.getItemId();
                 replaceFragment(new PersonalFragment());
