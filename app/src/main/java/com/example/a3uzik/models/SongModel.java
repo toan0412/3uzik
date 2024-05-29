@@ -6,12 +6,13 @@ public class SongModel {
     private String subtitle;
     private String url;
     private String coverUrl;
-    private boolean isHeart;
+    private String isHeart;
+
 
     public SongModel() {
     }
 
-    public SongModel(String id, String title, String subtitle, String url, String coverUrl, boolean isHeart) {
+    public SongModel(String id, String title, String subtitle, String url, String coverUrl, String isHeart) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -19,7 +20,6 @@ public class SongModel {
         this.coverUrl = coverUrl;
         this.isHeart = isHeart;
     }
-
 
     public String getId() {
         return id;
@@ -61,11 +61,11 @@ public class SongModel {
         this.coverUrl = coverUrl;
     }
 
-    public boolean isHeart() {
+    public String getIsHeart() {
         return isHeart;
     }
 
-    public void setHeart(boolean heart) {
-        isHeart = heart;
+    public void setIsHeart(String isHeart) {
+        this.isHeart = isHeart;
     }
 }

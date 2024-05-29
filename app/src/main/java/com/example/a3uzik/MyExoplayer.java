@@ -99,17 +99,17 @@ public class MyExoplayer {
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot document) {
-                            Boolean isLiked = document.getBoolean("isHeart");
-                            if (isLiked == null) {
-                            }
+                            String isHeartString = document.getString("isHeart");
+                            boolean isLiked = Boolean.parseBoolean(isHeartString);
                             isLiked = !isLiked;
                             firestore.collection("songs")
                                     .document(id)
-                                    .update("isHeart", isLiked);
+                                    .update("isHeart", String.valueOf(isLiked));
                         }
                     });
         }
     }
+
 
 
 }

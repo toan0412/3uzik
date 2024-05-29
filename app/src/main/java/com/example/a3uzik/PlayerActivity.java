@@ -188,11 +188,12 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void toggleHeart(){
         SongModel currentSong = MyExoplayer.getCurrentSong();
-        if(currentSong.isHeart()){
-            currentSong.setHeart(false);
+        boolean isHeart = Boolean.parseBoolean(currentSong.getIsHeart());
+        if(isHeart){
+            currentSong.setIsHeart("false");
             binding.heartBtn.setImageResource(R.drawable.ic_heart);
         }else {
-            currentSong.setHeart(true);
+            currentSong.setIsHeart("true");
             binding.heartBtn.setImageResource(R.drawable.ic_hearted);
         }
         MyExoplayer.updateLike();
@@ -220,8 +221,8 @@ public class PlayerActivity extends AppCompatActivity {
             MyExoplayer.startPlaying(this, song);
             binding.songTitleTextView.setText(song.getTitle());
             binding.songSubtitleTextView.setText(song.getSubtitle());
-            binding.heartBtn.setImageResource(song.isHeart() ? R.drawable.ic_hearted : R.drawable.ic_heart);
-            Toast.makeText(this,"check hearted" + song.isHeart(), Toast.LENGTH_SHORT).show();
+            boolean isHeart = Boolean.parseBoolean(song.getIsHeart());
+            binding.heartBtn.setImageResource(isHeart? R.drawable.ic_hearted : R.drawable.ic_heart);
             Glide.with(binding.songCoverImageView.getContext()).load(song.getCoverUrl())
                     .circleCrop()
                     .into(binding.songCoverImageView);
